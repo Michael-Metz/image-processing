@@ -14,7 +14,7 @@ This repository is a place for me to experiment with image processing algorithms
 
 <a name="otsu"></a>
 # Otsu's Method Program
-Otsu's method is an algorithm that automatically selects the optimal threshold level for a grayscale image.  This threshold level can then be used to threshold an image into a binary image.  For more information on how the algorithm works you can read `otsus-method-paper.pdf`.
+Otsu's method is an algorithm that automatically selects the optimal threshold level for a grayscale image.  This threshold level can then be used to threshold an image into a binary image.  For more information on how the algorithm works you can read `otsus-method-paper.pdf`.  The code for this algorithm is in Image8BitGrayscale.cpp and is the the method ImageGrayscale8Bit::otsuMethod.
 
 To use the program first you need to compile it. Which is easy using makefile.
 
