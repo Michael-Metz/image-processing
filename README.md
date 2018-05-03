@@ -33,7 +33,8 @@ for example you can use one of the test images.
 ```
 ./otsu test-images/keys-raw.pgm output.pgm
 ```
-now output.pgm will be the thresholded image
+In the case below a. is keys-raw.pgm b. is output.pgm and the histgram represents keys-raw.pgm while the red line represents the threshold value of 163, which was selected using Otsu's method 
+![Example image processed using otsus](https://i.imgur.com/dVr8oyA.jpg)
 
 <a name="pgm"></a>
 # PGM Files
