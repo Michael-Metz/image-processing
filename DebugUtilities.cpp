@@ -1,7 +1,3 @@
-//
-// Created by michael on 4/27/2018.
-//
-
 #include "DebugUtilities.h"
 #include <fstream>
 #include <iostream>
@@ -9,9 +5,9 @@
 using namespace std;
 /**
  * Writes the image histogram to a csv file
- * 0, sum of intensities at level 3
- * 1, sum of intensities at level 3
- * 2, sum of intensities at level 3
+ * 0, sum of intensities at level 0
+ * 1, sum of intensities at level 1
+ * 2, sum of intensities at level 2
  * 3, sum of intensities at level 3
  * .
  * .
