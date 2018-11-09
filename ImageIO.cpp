@@ -5,11 +5,11 @@
 
 /**
  * Reads a binary pgm file into an 8 bit image
+ *Magic number is p5 which indicates binary 8 bit grayscale image @see https://en.wikipedia.org/wiki/Netpbm_format
  *
- * //TODO be able to read ascii pgm file
  * @return image that was read
  */
-ImageGrayscale8Bit ImageIO::readPGMFile(std::string filePath) {
+ImageGrayscale8Bit ImageIO::readBinaryPGMFile(std::string filePath) {
     std::ifstream file(filePath.c_str(), std::ios::binary);
     if(! file.is_open())
     {
@@ -69,10 +69,12 @@ ImageGrayscale8Bit ImageIO::readPGMFile(std::string filePath) {
 
 /**
  * Writes an 8 bit grayscale image to a binary 8bit pgm file.
+ * Magic number is p5 which indicates binary 8 bit grayscale image @see https://en.wikipedia.org/wiki/Netpbm_format
+ *
  * @param filePath - that your want to save file to. Include the extension
  * @param img - the image file
  */
-void ImageIO::writePGMFile(std::string filePath, const ImageGrayscale8Bit& img){
+void ImageIO::writeBinaryPGMFile(std::string filePath, const ImageGrayscale8Bit& img){
     std::ofstream file(filePath,std::ios::binary);
     file << "P5" << std::endl;
     file << img.getWidth() << " " << img.getHeight()<< std::endl;

@@ -44,7 +44,7 @@ A pgm file is a simple file type that can store an 8 bit grayscale image.  There
 <a name="bugs"></a>
 # Known Bugs
 
-Either ImageIO::readPGMFile or ImageIO::writePGMFile is not working as expected.  This issue is slight but noticable.  This issue shifts all the pixels to the right by 1 pixel.  The left most column is then replaced with white pixels.  I have no idea what is causing this.
+Either ImageIO::readBinaryPGMFile or ImageIO::writeBinaryPGMFile is not working as expected.  This issue is slight but noticable.  This issue shifts all the pixels to the right by 1 pixel.  The left most column is then replaced with white pixels.  I have no idea what is causing this.
 
 <a name="test-images"></a>
 # Test Images
