@@ -27,10 +27,10 @@ int main(int arc, char *argv[]){
     string infile = argv[1];
     string outfile = argv[2];
 
-    ImageGrayscale8Bit image = ImageIO::readPGMFile(infile);
+    ImageGrayscale8Bit image = ImageIO::readBinaryPGMFile(infile);
     unsigned char intensity = image.otsuMethod();
     unsigned int i = (int) intensity;
     cout << "otsu's method found the intensity of " << i  << " to be the best threshold level"<< endl;
     image.thresholdOperation(intensity);
-    ImageIO::writePGMFile(outfile,image);
+    ImageIO::writeBinaryPGMFile(outfile,image);
 };
