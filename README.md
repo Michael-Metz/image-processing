@@ -16,10 +16,15 @@ This repository is a place for me to experiment with image processing algorithms
 # Otsu's Method Program
 Otsu's method is an algorithm that automatically selects the optimal threshold level for a grayscale image.  This threshold level can then be used to threshold an image into a binary image.  For more information on how the algorithm works you can read `otsus-method-paper.pdf`.  The code for this algorithm is in Image8BitGrayscale.cpp and is the the method ImageGrayscale8Bit::otsuMethod.
 
-To use the program first you need to compile it. Which is easy using makefile.
+I recently migrated this from makefile to cmake.  To my understanding cmake generates a makefile. Then you use makefile just as before
+To use the program first you need to run a `cmake .` 
 
 ```
-make otsu
+#run cmake first, which will generate a makefile
+cmake .
+
+#now we can use make to create the binary
+make
 ```
 
 then all you do is
