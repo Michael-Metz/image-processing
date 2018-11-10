@@ -13,6 +13,9 @@ class ImageIO{
 public:
     static ImageGrayscale8Bit readBinaryPGMFile(std::string filePath);
     static void writeBinaryPGMFile(std::string filePath, const ImageGrayscale8Bit &img);
+
+    static ImageGrayscale8Bit readASCIIPGMFile(std::string filePath);
+    static void writeASCIIPGMFile(std::string filePath, const ImageGrayscale8Bit &img);
 };
 
 

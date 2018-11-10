@@ -29,43 +29,38 @@ ImageGrayscale8Bit ImageIO::readBinaryPGMFile(std::string filePath) {
 
     if(magicNum != "P5")
     {
-        std::cout << "Invalid ppm file";
+        std::cout << "Invalid pgm file";
         std::cout << "magic: " << magicNum <<  std::endl;
         std::cout << "width: " << width <<  std::endl;
         std::cout << "height: " << height <<  std::endl;
         std::cout << "max: " << maxPixelIntensity << std::endl;
         exit(0);
     }
-
     ImageGrayscale8Bit image(width,height);
     int size = width * height;
 
-    char* buff = new  char[size];
-    file.read(buff, size);
+    char c;
+    getline(file,magicNum); //consume new line character
 
-    for(int i = 0; i < size; i++) {
-        char c = buff[i];
-        unsigned char intensity = (c>127) ? (unsigned char)(-(256 + c)) : (unsigned char)c;
-        image.setIntensity(i, intensity);
+    bool error;
+
+    for(int i = 0; i < size; i++){
+
+        //read byte by byte and set pixel
+        file.read(&c,1);
+        unsigned char intensityValue = (unsigned char) c;
+        image.setIntensity(i,intensityValue);
+        error = file.eof();
+        if(error){
+            std::cout << "reached end of file while reading binary PGM" << std::endl;
+            exit(1);
+        }
     }
+
     file.close();
 
-    delete [] buff;
     return image;
 }
-
-//void ImageIO::writePGMFile(std::string filePath, const ImageGrayscale8Bit& img){
-//    std::ofstream file(filePath,std::ios::binary);
-//    file << "P5" << std::endl;
-//    file << img.getWidth() << " " << img.getHeight()<< std::endl;
-//    file << "255" << std::endl;
-//
-//    int size = img.size();
-//    for(int i = 0; i < size; i++)
-//        file << img.getIntensity(i);
-//    file.close();
-//}
-
 
 /**
  * Writes an 8 bit grayscale image to a binary 8bit pgm file.
@@ -94,4 +89,83 @@ void ImageIO::writeBinaryPGMFile(std::string filePath, const ImageGrayscale8Bit&
     file.close();
 
     delete[] buff;
+}
+
+/**
+ * Reads an ASCII PGM file. magic number of P2
+ * See https://en.wikipedia.org/wiki/Netpbm_format
+ *
+ * @param filePath
+ * @return
+ */
+void ImageIO::writeASCIIPGMFile(std::string filePath, const ImageGrayscale8Bit &img) {
+    std::ofstream file(filePath);
+    file << "P2" << std::endl;
+    file << img.getWidth() << " " << img.getHeight()<< std::endl;
+    file << "255" << std::endl;
+
+    int printNewLineCounter = 1;
+    for(int i = 0; i < img.size(); i++)
+    {
+        unsigned int c = img.getIntensity(i);
+        file << c;
+        if(printNewLineCounter == img.getWidth()) {
+            file << std::endl;
+            printNewLineCounter = 1;
+        }
+        else {
+            file << " ";
+            printNewLineCounter++;
+        }
+    }
+    file.close();
+}
+
+/**
+ * Reads an ASCII PGM file. magic number of P2
+ * See https://en.wikipedia.org/wiki/Netpbm_format
+ *
+ * @param filePath
+ * @return
+ */
+ImageGrayscale8Bit ImageIO::readASCIIPGMFile(std::string filePath) {
+    std::ifstream file(filePath.c_str(), std::ios::binary);
+    if(! file.is_open())
+    {
+        std::cout << filePath << " could not be open." <<  std::endl;
+        exit(0);
+    }
+
+    std::string magicNum;
+    long width = 0;
+    long height = 0;
+    long maxPixelIntensity = 0;
+
+    file >> magicNum;
+    file >> width;
+    file >> height;
+    file >> maxPixelIntensity;
+
+    if(magicNum != "P2")
+    {
+        std::cout << "Invalid pgm file";
+        std::cout << "magic: " << magicNum <<  std::endl;
+        std::cout << "width: " << width <<  std::endl;
+        std::cout << "height: " << height <<  std::endl;
+        std::cout << "max: " << maxPixelIntensity << std::endl;
+        exit(0);
+    }
+
+    ImageGrayscale8Bit image(width,height);
+    int size = width * height;
+
+    for(int i = 0; i < size; i++)
+    {
+        unsigned int c;
+        file >> c;
+        unsigned char intensity = c;
+        image.setIntensity(i,intensity);
+    }
+    file.close();
+    return image;
 }

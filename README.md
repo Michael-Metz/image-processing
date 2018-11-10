@@ -43,13 +43,37 @@ In the case below a. is keys-raw.pgm b. is output.pgm and the histgram represent
 
 <a name="pgm"></a>
 # PGM Files
+A good explanation of the structure can be found here [https://en.wikipedia.org/wiki/Netpbm_format](https://en.wikipedia.org/wiki/Netpbm_format)
 
 A pgm file is a simple file type that can store an 8 bit grayscale image.  There is no compression making it straightforward to read and write, but at the cost of disk space.  To convert a file to this type you can use [https://www.online-utility.org/image/convert/to/PGM](https://www.online-utility.org/image/convert/to/PGM) or [ImageMagick](https://www.imagemagick.org/script/index.php).  You can view pgm files nativly on mac, and for windows you can view them using [irfanview](https://www.irfanview.com/). Currently the c++ code is written to read 8 bit grayscale binary pgm files.  It will not read ASCII pgm files. There are test images in the `test-images/` directory that work.
 
 <a name="bugs"></a>
 # Known Bugs
 
-Either ImageIO::readBinaryPGMFile or ImageIO::writeBinaryPGMFile is not working as expected.  This issue is slight but noticable.  This issue shifts all the pixels to the right by 1 pixel.  The left most column is then replaced with white pixels.  I have no idea what is causing this.
+N/A
+
+#Resolved Bugs
+
+**Issue:** "*Either `ImageIO::readBinaryPGMFile` or `ImageIO::writeBinaryPGMFile` is not working as expected.  This issue is slight but noticable.  This issue shifts all the pixels to the right by 1 pixel.  The left most column is then replaced with white pixels.  I have no idea what is causing this.*"
+
+**Solution:** 2018-11-10 Determined `ImageIO::readBinaryPGMFile` was the culprit.  a binary pgm file is composed like such
+lines 1 - 3 are assci
+line 1: magic number, indicates what type of ppm file it is
+line 2: width and height
+line 3: max intensity vale
+after line 3 binary data starts 
+```
+P5
+1920 1080
+255
+{bindary data starts}
+```
+So in c++ we use an `fstream` to open the file. To read the content of the first three lines we use `>>` operator.
+Then to read the binary data we read into a `char` byte by byte. After reading the last header line you must consume the 
+new line character, using `getline()`. If you don't do this you will always read the first pixel as `\n` which yields a decimal intensity value of `10`
+then all your pixels will be shifted by one. 
+
+
 
 <a name="test-images"></a>
 # Test Images
