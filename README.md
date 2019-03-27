@@ -58,10 +58,15 @@ here [https://en.wikipedia.org/wiki/Netpbm_format](https://en.wikipedia.org/wiki
 A pgm file is a simple file type that can store an 8 bit grayscale image.  There is no compression making it 
 straightforward to read and write, but at the cost of disk space.  To convert a file to this type you can use 
 [https://www.online-utility.org/image/convert/to/PGM](https://www.online-utility.org/image/convert/to/PGM) 
-or [ImageMagick](https://www.imagemagick.org/script/index.php).  You can view pgm files nativly on mac, and for windows 
+or [ImageMagick](https://www.imagemagick.org/script/index.php). 
+```sh
+# With imagemagick
+convert input.jpg out.pgm
+```
+You can view pgm files nativly on mac, and for windows 
 you can view them using [irfanview](https://www.irfanview.com/). Currently the c++ code is written to read 8 
 bit grayscale binary pgm files.  
-It will not read ASCII pgm files. There are test images in the `test-images/` directory that work.
+There are test images in the `test-images/` that are of type binary PGM.
 
 <a name="bugs"></a>
 # Known Bugs
